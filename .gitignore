@@ -1,0 +1,41 @@
+# Node modules
+node_modules/
+.vite/
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment variables
+.env
+.env.*.local
+.env.local
+
+# macOS specific files
+.DS_Store
+.Trashes
+.Spotlight-V100
+._*
+
+# Editor-specific files (optional, depending on your editor)
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Test coverage reports
+coverage/
+
+# Build artifacts
+build/
+
+# Other temporary files
+tmp/

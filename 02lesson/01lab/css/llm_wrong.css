@@ -1,0 +1,11 @@
+/* Intentionally over-specific and hard to override */
+body .container main .dna-grid h1.title {
+  color: purple;
+  text-align: left;
+  border: 1px dotted orange;
+}
+
+/* This looks harmless but “wins” over .title in many cases */
+.container .title {
+  color: green;
+}
