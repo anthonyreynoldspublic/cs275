@@ -1,24 +1,14 @@
-/* === CS275 styles.css starter ===
-Goals for today:
-1) Style body background with a subtle tint.
-2) Center the .title; make it red; give it a 10px blue border.
-3) Style .dna-card boxes using padding, border, margin (box model).
-4) Lay out .dna-grid as responsive columns (minmax 240px).
-5) Keep specificity LOW: prefer single-class selectors (e.g., .title, .dna-card).
-*/
+/* === CS275 styles.css starter ===*/
 
-/* Example scaffolds (students can edit/replace) */
 body {
   background: #f7f9fc; /* subtle tint */
   color: #111;
 }
 
+#hero {
+  text-transform: uppercase;
+}
 .title {
-  /* Prompt Lab target: students/LLM should produce these 3 behaviors */
-  /* color: red; */
-  /* text-align: center; */
-  /* border: 10px solid blue; */
-  /* Add padding so the border doesn’t hug the text */
 }
 
 .dna-grid {
