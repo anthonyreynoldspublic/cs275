@@ -1,14 +1,14 @@
 /* === CS275 styles.css starter ===*/
 
 body {
-  background: #f7f9fc; /* subtle tint */
+  background: #f0f2f5; 
   color: #111;
 }
 
 #hero {
   text-transform: uppercase;
 }
-.title {
+title {
 }
 
 .dna-grid {
@@ -20,8 +20,6 @@ body {
 
 .dna-card {
   background: white;
-  border: 1px solid #d5d9e0;
-  padding: 1rem;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,.04);
 }
