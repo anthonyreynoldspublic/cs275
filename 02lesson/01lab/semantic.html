@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>EMBER & THISTLE — Field-Grade Apparel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="EMBER & THISTLE: field-grade apparel for city & summit. Jackets, knits, boots." />
+</head>
+<body>
+  <header role="banner">
+    <div class="brand">
+      <a href="/" class="brand__logo" aria-label="EMBER & THISTLE home">
+        <img src="/img/logo.svg" alt="EMBER & THISTLE" />
+      </a>
+      <p class="brand__tagline">Field-Grade Apparel</p>
+    </div>
+
+    <nav aria-label="Primary" class="site-nav">
+      <ul>
+        <li><a href="/men">Men</a></li>
+        <li><a href="/women">Women</a></li>
+        <li><a href="/new">New</a></li>
+        <li><a href="/lookbook">Lookbook</a></li>
+        <li><a href="/sustainability">Sustainability</a></li>
+        <li><a href="/stories">Stories</a></li>
+      </ul>
+    </nav>
+
+    <nav aria-label="Utility" class="utility-nav">
+      <ul>
+        <li><a href="/stores">Stores</a></li>
+        <li><a href="/account">Account</a></li>
+        <li><a href="/cart" aria-label="Cart (2 items)">Cart (2)</a></li>
+        <li>
+          <form action="/search" role="search">
+            <label for="q" class="visually-hidden">Search</label>
+            <input id="q" name="q" placeholder="Search jackets, boots…" />
+            <button type="submit">Search</button>
+          </form>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="content">
+    <section aria-labelledby="hero-title" class="hero">
+      <h1 id="hero-title">Storm-Ready. City-Easy.</h1>
+      <p>Waterproof shells built for the trail. Styled for downtown.</p>
+      <a class="cta" href="/new">Shop New Arrivals</a>
+      <figure>
+        <img src="/img/hero-aw25.jpg" alt="Model wearing ember shell in rain" />
+        <figcaption>AW/25 launch: Ember Shell</figcaption>
+      </figure>
+    </section>
+
+    <section aria-labelledby="categories-title" class="categories">
+      <h2 id="categories-title">Shop by Category</h2>
+      <ul class="category-grid">
+        <li>
+          <article>
+            <a href="/jackets">
+              <figure>
+                <img src="/img/cat-jackets.jpg" alt="Performance jackets" />
+                <figcaption>Jackets</figcaption>
+              </figure>
+            </a>
+          </article>
+        </li>
+        <li>
+          <article>
+            <a href="/knitwear">
+              <figure>
+                <img src="/img/cat-knitwear.jpg" alt="Merino knitwear" />
+                <figcaption>Knitwear</figcaption>
+              </figure>
+            </a>
+          </article>
+        </li>
+        <li>
+          <article>
+            <a href="/footwear">
+              <figure>
+                <img src="/img/cat-boots.jpg" alt="Leather boots" />
+                <figcaption>Footwear</figcaption>
+              </figure>
+            </a>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="featured-title" class="featured">
+      <h2 id="featured-title">Featured Products</h2>
+      <ul class="product-grid">
+        <li>
+          <article class="product" aria-labelledby="p1-title">
+            <a href="/product/ember-shell">
+              <figure>
+                <img src="/img/p-ember-shell.jpg" alt="Ember Shell jacket, charcoal" />
+                <figcaption id="p1-title">Ember Shell</figcaption>
+              </figure>
+              <p class="price">$249</p>
+            </a>
+          </article>
+        </li>
+        <li>
+          <article class="product" aria-labelledby="p2-title">
+            <a href="/product/thistle-boot">
+              <figure>
+                <img src="/img/p-thistle-boot.jpg" alt="Thistle boot in oak leather" />
+                <figcaption id="p2-title">Thistle Boot</figcaption>
+              </figure>
+              <p class="price">$189</p>
+            </a>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="lookbook-title" class="lookbook">
+      <h2 id="lookbook-title">Lookbook: North By Night</h2>
+      <p>Urban silhouettes meet alpine textures.</p>
+      <a href="/lookbook" class="cta">View Lookbook</a>
+    </section>
+
+    <section aria-labelledby="sustain-title" class="sustainability">
+      <h2 id="sustain-title">Sustainability</h2>
+      <article>
+        <h3>Repair, not replace</h3>
+        <p>Lifetime repairs on all outerwear. Recycled fabrics in AW/25.</p>
+        <a href="/sustainability">Learn more</a>
+      </article>
+      <aside aria-label="Certifications">
+        <ul>
+          <li>bluesign® approved</li>
+          <li>RDS down</li>
+          <li>Fair Wear</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section aria-labelledby="stories-title" class="stories">
+      <h2 id="stories-title">Stories</h2>
+      <article>
+        <h3><a href="/stories/field-test-glen">Field Test: Glen Shiel</a></h3>
+        <p>72 hours of rain, one dry shell.</p>
+        <time datetime="2025-10-12">Oct 12, 2025</time>
+      </article>
+      <article>
+        <h3><a href="/stories/bootcraft">Bootcraft: Oak Tanning</a></h3>
+        <p>Why our leather ages like a good record.</p>
+        <time datetime="2025-09-20">Sep 20, 2025</time>
+      </article>
+    </section>
+  </main>
+
+  <footer role="contentinfo" class="site-footer">
+    <section aria-labelledby="signup-title">
+      <h2 id="signup-title">Join the Field Notes</h2>
+      <form action="/subscribe">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="you@example.com" required />
+        <button type="submit">Subscribe</button>
+      </form>
+    </section>
+
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="/care">Care Guide</a></li>
+        <li><a href="/size">Size Guide</a></li>
+        <li><a href="/returns">Returns</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <small>&copy; 2025 EMBER &amp; THISTLE</small>
+  </footer>
+</body>
+</html>
