@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HW #3 — Design Tokens (No-JS)</title>
+  <link rel="stylesheet" href="tokens.css" />
+  <style>
+    .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+    pre { padding: var(--space-2); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="toolbar">
+      <h1>Design Tokens: Variables & Visual Grammar</h1>
+      <span class="tag">No JavaScript</span>
+    </div>
+
+    <div class="grid-2">
+      <section class="card">
+        <h2>Palette</h2>
+        <p>Tokens define a consistent light/dark appearance. If your OS is set to dark mode, this page will switch automatically.</p>
+        <div class="mt-2">
+          <button class="btn btn-primary">Primary Action</button>
+          <button class="btn btn-outline">Secondary</button>
+        </div>
+        <div class="mt-2">
+          <span class="tag">--color-primary</span>
+          <span class="tag">--color-accent</span>
+          <span class="tag">--color-success</span>
+          <span class="tag">--color-warning</span>
+          <span class="tag">--color-text</span>
+          <span class="tag">--color-bg</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Typography & Spacing</h2>
+        <p>Type scale and spacing rhythm are tokenized for consistency.</p>
+        <h3 class="mt-1">Scale</h3>
+        <ul>
+          <li><code>--fs-700</code> → <span style="font-size: var(--fs-700)">Display</span></li>
+          <li><code>--fs-500</code> → <span style="font-size: var(--fs-500)">Heading</span></li>
+          <li><code>--fs-200</code> → <span style="font-size: var(--fs-200)">Body</span></li>
+        </ul>
+        <div class="mt-2">
+          <span class="tag">--space-1</span>
+          <span class="tag">--space-2</span>
+          <span class="tag">--space-3</span>
+          <span class="tag">--space-4</span>
+        </div>
+      </section>
+    </div>
+
+    <section class="card mt-3">
+      <h2>Usage Example</h2>
+      <pre><code>.btn-primary {
+  background: var(--color-primary);
+  color: white;
+  border-radius: var(--radius-md);
+}</code></pre>
+    </section>
+
+    <section class="card mt-3">
+      <h2>Reflection (sample ≤ 250 words)</h2>
+      <p><em>Which variables did you name first, and why?</em> Colors and spacing, because they drive the biggest visible deltas and reduce “magic numbers.”</p>
+      <p><em>What rules can be enforced?</em> Consistent spacing via <code>--space-*</code>, semantic color use via <code>--color-primary</code> on interactive elements, and clear type hierarchy with <code>--fs-*</code>.</p>
+      <p><em>What did the LLM suggest that you changed?</em> I replaced a low-contrast dark palette with more legible values.</p>
+    </section>
+
+    <footer>
+      This demo uses only HTML + CSS. Dark mode uses <code>@media (prefers-color-scheme: dark)</code>.
+    </footer>
+  </div>
+</body>
+</html>

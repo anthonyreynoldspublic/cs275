@@ -1,0 +1,83 @@
+/* ================================
+   CSS Design Token Starter
+   ================================ */
+
+/* --- Design Tokens --- */
+:root {
+  --color-bg: #fdfdfd;
+  --color-surface: #ffffff;
+  --color-text: #222222;
+  --color-accent: #0077cc;
+
+  --font-base: 'Helvetica Neue', Arial, sans-serif;
+  --font-heading: 'Georgia', serif;
+
+  --radius: 0.5rem;
+  --gap: 1rem;
+  --shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Global Reset --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-base);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.5;
+  padding: 1rem;
+}
+
+/* --- Header & Footer --- */
+header, footer {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+header h1 {
+  font-family: var(--font-heading);
+  margin-bottom: 0.25rem;
+}
+
+.tagline {
+  color: var(--color-accent);
+  font-style: italic;
+}
+
+/* --- Grid Layout --- */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--gap);
+}
+
+/* --- Cards --- */
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card h2 {
+  font-family: var(--font-heading);
+  color: var(--color-accent);
+  margin-bottom: 0.5rem;
+}
+
+/* --- Footer --- */
+footer {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #666;
+}

@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.container {
+  display: flex;
+  height: 200px;
+  border: 2px solid #aaa;
+  justify-content:space-around;
+  align-items:center;
+  /* Try changing this value */
+  flex-direction: row; /* or column */
+}
+
+.container div {
+  background: lightblue;
+  padding: 20px;
+  border: 1px solid #333;
+}
+
+
