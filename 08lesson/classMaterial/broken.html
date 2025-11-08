@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Broken Form Demo</title>
+  <style>
+    /* Intentionally too little contrast for WAVE to flag */
+    .bad-contrast { color: #777; background: #777; padding: 0.5rem; }
+  </style>
+</head>
+<body>
+  <form action="/subscribe" method="post">
+    <h1>Subscribe</h1>
+
+    <!-- W3C error #1: bad input type 'mail' -->
+    <label for="email">Email</label>
+    <input id="email" type="mail" name="email" />
+
+    <!-- W3C error #2: duplicate id 'email' -->
+    <label for="email">Confirm Email</label>
+    <input id="email" type="email" name="confirm_email" />
+
+    <!-- WAVE error #1: missing label (no label/aria*) -->
+    <input type="text" name="nickname" placeholder="Nickname (optional)" />
+
+    <!-- WAVE error #2: low color contrast -->
+    <p class="bad-contrast">This text has insufficient contrast.</p>
+
+    <button type="submit">Join</button>
+  </form>
+</body>
+</html>
