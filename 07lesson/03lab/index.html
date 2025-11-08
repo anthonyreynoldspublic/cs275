@@ -1,51 +1,120 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Grid & Visual Design Grammar — Starter</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <title>Practice: Failing Form (Fix Me)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
-    <h1>Design Token Grid Demo</h1>
-    <p class="tagline">Testing our visual grammar with CSS Grid + variables</p>
+    <h1>Fix-Me Signup</h1>
+    <p class="tagline">Find the problems, then make it right.</p>
   </header>
 
-  <main class="card-grid">
-    <article class="card">
-      <h2>Card One</h2>
-      <p>LLM-assisted design starts with clear variables.</p>
-    </article>
+  <main>
+    <form action="/signup" method="GET">
+      <div class="field">
+        <label for="full-name">Full name</label>
+        <input
+          id="fullname"             
+          type="text"
+          name="fullName"
+          minlength="1"             
+          aria-describedby="full-hint" />
+        <small id="full-hint">Enter your first and last name.</small>
+      </div>
 
-    <article class="card">
-      <h2>Card Two</h2>
-      <p>Predict → apply → verify. Design as test-first thinking.</p>
-    </article>
 
-    <article class="card">
-      <h2>Card Three</h2>
-      <p>Color and type choices should serve readability and tone.</p>
-    </article>
+      <div class="field">
+        <label for="email">Email address</label>
+        <input
+          id="email"
+          type="text"              
+          name="email"
+          required
+          aria-describedby="email-help" />
+        <small id="email-hint">We’ll send you a confirmation link.</small>
+      </div>
 
-    <article class="card">
-      <h2>Card Four</h2>
-      <p>Each token is a hypothesis about how your site should feel.</p>
-    </article>
+      
+      <div class="field">
+        <input
+          id="phone"
+          type="tel"
+          name="phone"
+          placeholder="Phone number"
+          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          aria-describedby="phone-hint" />
+        <small id="phone-hint">Format: 123-456-7890</small>
+      </div>
 
-    <article class="card">
-      <h2>Card Five</h2>
-      <p>LLMs can propose palettes, but you decide what quality means.</p>
-    </article>
 
-    <article class="card">
-      <h2>Card Six</h2>
-      <p>Grid layout keeps visual rhythm consistent across screens.</p>
-    </article>
+      <div class="field">
+        <label for="pwd">Password</label>
+        <input
+          id="pwd"
+          type="password"
+          name="password"
+          required
+          minlength="4"              <!-- too short for a sane policy -->
+          aria-describedby="pwd-hint" />
+        <small id="pwd-hint">Use at least 8 characters with a number. (But constraint isn’t enforcing it!)</small>
+      </div>
+
+      <div class="field">
+        <label for="pwd2">Confirm password</label>
+        <input
+          id="pwd2"
+          type="password"
+          required
+          minlength="4" />
+        <small>Re-enter your password.</small>
+      </div>
+
+
+      <div class="field">
+        <label for="favorite">Favorite drink</label>
+        <select id="favorite" name="favorite">
+          <option value="">— Select —</option>
+          <option>Espresso</option>
+          <option>Latte</option>
+          <option>Cappuccino</option>
+          <option>Americano</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="optin">
+          <input id="optin" type="checkbox" name="optin" value="yes" />
+          Send me the newsletter
+        </label>
+      </div>
+
+      <div class="field">
+        <button type="submit">Create account</button>
+      </div>
+    </form>
+
+    <section class="tips">
+      <h2>Your checklist</h2>
+      <ol>
+        <li>Visible label linked with <code>for/id</code>.</li>
+        <li>Related fields grouped with <code>fieldset/legend</code>.</li>
+        <li>Every input has a unique <code>name</code>.</li>
+        <li>Correct input types.</li>
+        <li><code>autocomplete</code> where applicable.</li>
+        <li>Helpful <code>&lt;small&gt;</code> + <code>aria-describedby</code>.</li>
+        <li>Sensible constraints.</li>
+        <li>Native errors + CSS reflects <code>:invalid</code>/<code>:valid</code>.</li>
+        <li>GET builds the expected query string.</li>
+        <li>Use tokens for colors/spacing/type (no raw hex/px).</li>
+      </ol>
+    </section>
   </main>
 
   <footer>
-    <p>© 2025 CS275 Web Scripting — Grid & Visual Design Grammar</p>
+    © CS275 Practice – Failing Form
   </footer>
 </body>
 </html>

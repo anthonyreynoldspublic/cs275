@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Forms + HTML5 (No-JS Edition)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* ================================
+       CSS Design Token Starter
+       ================================ */
+
+    /* --- Design Tokens --- */
+    :root {
+      --color-bg: #fdfdfd;
+      --color-surface: #ffffff;
+      --color-text: #222222;   /* High contrast on white */
+      --color-accent: #0077cc; /* Focus ring + accents */
+
+      --font-base: 'Helvetica Neue', Arial, sans-serif;
+      --font-heading: 'Georgia', serif;
+
+      --radius: 0.5rem;
+      --gap: 1rem;
+      --shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+      /* ---- Bridge variables to match the form styles you provided ---- */
+      --surface: var(--color-surface);
+      --text: var(--color-text);
+      --text-muted: #666666;              /* ~5.4:1 on white (OK for body/small) */
+      --accent: var(--color-accent);
+
+      /* Spacing scale used by form styles */
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.5rem;
+
+      /* Type scale used by form styles */
+      --step--1: 0.875rem; /* 14px */
+      --step-0: 1rem;      /* 16px */
+      --step-1: 1.25rem;   /* 20px */
+      --step-2: 1.5rem;    /* 24px */
+    }
+
+    /* --- Global Reset --- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-base);
+      color: var(--color-text);
+      background: var(--color-bg);
+      line-height: 1.5;
+      padding: 1rem;
+    }
+
+    /* --- Header & Footer --- */
+    header, footer { text-align: center; margin-bottom: 1rem; }
+
+    header h1 {
+      font-family: var(--font-heading);
+      margin-bottom: 0.25rem;
+    }
+
+    .tagline { color: var(--color-accent); font-style: italic; }
+
+    /* --- Grid Layout (for demo cards if you add them later) --- */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--gap);
+    }
+
+    /* --- Cards (not required for the form, kept for layout parity) --- */
+    .card {
+      background: var(--color-surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .card h2 {
+      font-family: var(--font-heading);
+      color: var(--color-accent);
+      margin-bottom: 0.5rem;
+    }
+
+    /* --- Footer --- */
+    footer { margin-top: 2rem; font-size: 0.9rem; color: #666; }
+
+    /* =====================================
+       FORM STYLES (from your spec)
+       ===================================== */
+    form { display: grid; gap: var(--space-4); max-width: 48rem; margin: 0 auto; }
+    .field { display: grid; gap: var(--space-1); padding-block: var(--space-1); }
+    label { font-size: var(--step--1); color: var(--text); }
+    input, select, textarea {
+      padding: var(--space-2);
+      border: 1px solid color-mix(in oklab, var(--text) 20%, transparent);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--text);
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    input:invalid, select:invalid { border-color: var(--accent); }
+    small { color: var(--text-muted); font-size: var(--step--1); }
+
+    /* Simple page framing */
+    main { display: grid; gap: var(--space-5); justify-items: center; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Bean Scene Signup</h1>
+    <p class="tagline">Good forms feel invisible.</p>
+  </header>
+
+  <main>
+    <form action="/signup" method="get" novalidate>
+      <fieldset class="card" style="width:100%;">
+        <legend><strong>Create your account</strong></legend>
+
+        <!-- Field: Full Name -->
+        <div class="field">
+          <label for="full-name">Full name</label>
+          <input
+            id="full-name"
+            type="text"
+            name="fullName"
+            autocomplete="name"
+            required
+            minlength="2"
+            aria-describedby="full-name-hint" />
+          <small id="full-name-hint">Use your real name as it appears on receipts.</small>
+        </div>
+
+        <div class="field">
+          <label for="email">Email address</label>
+          <input
+            id="userEmail"         
+            type="email"
+            name="email"
+            autocomplete="email"
+            required
+            aria-describedby="email-hint" />
+          <small id="email-hint">We’ll send a confirmation to this address.</small>
+        </div>
+
+        <div class="field">
+           <input
+            id="phone"
+            type="tel"
+            name="phone"
+            placeholder="Phone number"
+            autocomplete="tel"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            aria-describedby="phone-hint" />
+          <small id="phone-hint">Format: 123-456-7890</small>
+        </div>
+
+        <!-- Field: Password -->
+        <div class="field">
+          <label for="pwd">Password</label>
+          <input
+            id="pwd"
+            type="password"
+            name="password"
+            required
+            minlength="8"
+            aria-describedby="pwd-hint"
+            autocomplete="new-password" />
+          <small id="pwd-hint">At least 8 characters, include a number.</small>
+        </div>
+
+
+        <div class="field">
+          <label for="pwd2">Confirm password</label>
+          <input
+            id="pwd2"
+            type="password"
+            
+            required
+            minlength="8"
+            autocomplete="new-password" />
+          <small>Re-enter your password.</small>
+        </div>
+
+        <!-- Field: Favorite Coffee (select) -->
+        <div class="field">
+          <label for="favorite">Favorite coffee</label>
+          <select id="favorite" name="favorite" required aria-describedby="fav-hint">
+            <option value="">— Select one —</option>
+            <option>Espresso</option>
+            <option>Americano</option>
+            <option>Cappuccino</option>
+            <option>Latte</option>
+            <option>Mocha</option>
+          </select>
+          <small id="fav-hint">Pick your usual order.</small>
+        </div>
+
+        <!-- Field: Newsletter opt-in -->
+        <div class="field">
+          <label for="optin">
+            <input id="optin" type="checkbox" name="optin" value="yes" />
+            Send me the monthly newsletter
+          </label>
+        </div>
+
+        <div class="field">
+          <button type="submit" class="card">Create account</button>
+        </div>
+      </fieldset>
+    </form>
+
+    <section class="card" style="max-width:48rem;">
+      <h2>What to test (no JavaScript)</h2>
+      <ul style="margin-left:1rem; list-style: disc;">
+        <li>DevTools → <strong>Accessibility</strong>: verify label and input contrast ≥ <strong>4.5:1</strong>.</li>
+        <li>Check label ↔ id links (MISTAKE #1).</li>
+        <li>Every control has a visible label (MISTAKE #2).</li>
+        <li>Each input submits a <code>name=value</code> pair (MISTAKE #3).</li>
+        <li>Try to submit blank / wrong format and observe native validation.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    © Bean Scene • Demo for CS275 Week 4.1
+  </footer>
+</body>
+</html>

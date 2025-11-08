@@ -1,0 +1,9 @@
+You are my forms assistant. Produce an accessible HTML5 registration form with:
+- fields: full name, email, password, password confirmation, favorite coffee (select),
+  newsletter opt-in (checkbox).
+- Use proper <label for>, id, and name attributes; group related fields with <fieldset>/<legend>.
+- Add required where appropriate. Use input types and constraints that make sense (minlength, pattern hints).
+- Add autocomplete attributes for all applicable fields.
+- Include helper text via <small id="...-hint"> and associate it with aria-describedby.
+- Do not include any JavaScript. No inline styles.
+- Keep it minimal and valid HTML5.
