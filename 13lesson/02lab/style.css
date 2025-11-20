@@ -1,0 +1,8 @@
+body {
+  font-family: sans-serif;
+}
+
+.changed {
+  color: tomato;
+  font-weight: bold;
+}

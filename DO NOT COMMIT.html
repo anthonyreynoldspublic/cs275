@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React List App</title>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script type="text/babel">
+        const { useState } = React;
+
+        function ListItem({ text }) {
+            return <li>{text}</li>;
+        }
+
+        function App() {
+            const [inputValue, setInputValue] = useState('');
+            const [items, setItems] = useState([]);
+
+            function handleAdd() {
+                setItems([...items, inputValue]);
+                setInputValue('');
+            }
+
+            return (
+                <div>
+                    <input 
+                        type="text"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                    />
+                    <button onClick={handleAdd}>Add</button>
+                    <ul>
+                        {items.map((item, index) => (
+                            <ListItem key={index} text={item} />
+                        ))}
+                    </ul>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('app'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

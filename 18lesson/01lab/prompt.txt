@@ -1,0 +1,12 @@
+Prompt pattern you can use:
+
+“Write a pure JavaScript function named createCard that returns a DOM element.
+It should have:
+
+wrapper div with class card
+
+h3 title
+
+p description
+Return the DOM element, not HTML string.
+No external libraries.”

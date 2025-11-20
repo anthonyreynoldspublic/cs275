@@ -1,0 +1,10 @@
+<button id="add">Add</button>
+<ul id="list"></ul>
+<script>
+  const btn = document.getElementById('add');
+  const ul = document.getElementById('list');
+  
+  btn.addEventListener('click', () => {
+    ul.innerHTML = "<li>Item</li>"; // BUG: replaces entire list
+  });
+</script>

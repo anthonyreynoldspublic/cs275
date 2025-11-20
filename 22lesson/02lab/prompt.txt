@@ -1,0 +1,7 @@
+“Explain in simple terms how a Raspberry Pi running nginx serves a static HTML file to a browser.
+Keep the focus on:
+files on disk
+GET request
+response
+DOM building
+Then list 3–5 things I can check from my browser or DevTools (not on the Pi!) to confirm the page really came from the Pi.”
