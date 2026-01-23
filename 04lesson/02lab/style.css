@@ -1,110 +1,19 @@
-/* Page chrome */
-:root {
-  --page-bg: #f6f7fb;
-  --ink: #222;
-  --card-bg: #fff;
-  --border: #999;
-  --accent: #2a6df4;
-
-  /* Match expectations used by the JS test runner */
-  --card-width: 200px;   /* CSS content width (content-box by default) */
-  --card-pad: 12px;
-  --card-border: 2px;
-  --card-margin: 16px;
-}
-
-html, body {
-  height: 100%;
-}
-
 body {
-  margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  color: var(--ink);
-  background: var(--page-bg);
+  font-family: sans-serif;
+  margin: 2rem;
+  background: #f7f7f7;
 }
 
-.toolbar {
-  padding: 1rem 1.25rem;
-  background: #fff;
-  border-bottom: 1px solid #e7e9ef;
-}
-
-.toolbar h1 {
-  margin: 0 0 0.5rem;
-  font-size: 1.15rem;
-}
-
-.controls {
-  display: flex;
-  gap: 0.75rem;
-  margin-bottom: 0.25rem;
-}
-
-button {
-  border: 1px solid #cbd3e7;
-  background: #fff;
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-}
-
-button:hover { border-color: var(--accent); }
-button[aria-pressed="true"] { background: #eef3ff; border-color: var(--accent); }
-
-.hint {
-  margin: 0.25rem 0 0;
-  color: #5b6275;
-  font-size: 0.95rem;
-}
-
-/* Cards layout */
 .card-container {
-  padding: 1rem;
-  /* Key trick: remove inline-block whitespace so the gap is purely margins.
-     This keeps the test math simple and predictable. */
-  font-size: 0;
+  /* later: test inline-block, flex, grid, etc. */
 }
 
 .card {
-  display: inline-block;     /* concept focus */
-  vertical-align: top;
-  background: var(--card-bg);
-  border: var(--card-border) solid var(--border);
-  width: var(--card-width);  /* content width (when content-box) */
-  padding: var(--card-pad);
-  margin: var(--card-margin);
-  border-radius: 0.5rem;
-  box-sizing: content-box;   /* default; JS toggler flips this */
-  font-size: 16px;           /* restore text since parent is 0 */
-}
-
-.card h2 {
-  margin: 0 0 0.5rem;
-  font-size: 1.05rem;
-}
-
-/* Results area */
-.results {
-  padding: 1rem 1.25rem;
-}
-
-.results h3 {
-  margin: 0 0 0.5rem;
-  font-size: 1rem;
-  color: #3b3f4a;
-}
-
-#resultsList {
-  margin: 0.25rem 0 0;
-  padding-left: 1.25rem;
-  line-height: 1.5;
-}
-
-.pass { color: #0c7a43; }
-.fail { color: #b00020; }
-
-/* Toggle border-box mode via the toolbar button */
-.border-box-mode .card {
-  box-sizing: border-box;
+  background: white;
+  border: 2px solid #ccc;
+  padding: 1rem;
+  margin: 1rem;
+  /* Students adjust these: */
+  width: 200px;
+  display: inline-block; /* key concept for this class */
 }

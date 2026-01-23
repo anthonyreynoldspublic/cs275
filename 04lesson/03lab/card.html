@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Card Layout Lab – Conceptual Testing Intro</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="toolbar" role="region" aria-label="Layout test controls">
+    <h1>Box Model & Layout – Card Lab</h1>
+    <div class="controls">
+      <button id="runTests" type="button">Run Layout Tests</button>
+      <button id="toggleBoxSizing" type="button" aria-pressed="false">
+        Toggle <code>box-sizing</code> (content-box ↔ border-box)
+      </button>
+    </div>
+    <p class="hint">
+      Change CSS in <code>style.css</code>, then click <strong>Run Layout Tests</strong> to verify your predictions.
+    </p>
+  </header>
+
+  <main class="card-container">
+    <article class="card">
+      <h2>Card One</h2>
+      <p>Test margins, padding, borders, and width behavior.</p>
+    </article>
+
+    <article class="card">
+      <h2>Card Two</h2>
+      <p>Inline-block; sits next to Card One.</p>
+    </article>
+
+    <article class="card">
+      <h2>Card Three</h2>
+      <p>Predict spacing before you click the button.</p>
+    </article>
+  </main>
+
+  <section class="results" aria-live="polite" aria-atomic="true">
+    <h3>Test Results</h3>
+    <ol id="resultsList"></ol>
+  </section>
+
+  <!-- Tiny in-page test runner (students don't have to write JS) -->
+  <script>
+    // --- Utility helpers ---
+    const $ = (sel, root = document) => root.querySelector(sel);
+    const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+    const px = (v) => Math.round(parseFloat(v)); // normalize floats to px (rounded)
+
+    function recordResult(ok, message) {
+      const li = document.createElement('li');
+      li.className = ok ? 'pass' : 'fail';
+      li.innerHTML = (ok ? '✅ ' : '❌ ') + message;
+      $('#resultsList').appendChild(li);
+    }
+
+    function clearResults() {
+      $('#resultsList').innerHTML = '';
+    }
+
+    // --- Expectations (match style.css default values) ---
+    const EXPECT = {
+      display: 'inline-block',
+      margin: 16,      // px
+      padding: 12,     // px
+      border: 2,       // px
+      width: 200,      // px (CSS width)
+      gapBetweenCards: 32 // px = left card margin-right (16) + right card margin-left (16)
+    };
+
+    function runLayoutTests() {
+      clearResults();
+
+      const cards = $$('.card');
+      if (cards.length < 3) {
+        recordResult(false, 'Expected at least 3 cards on the page.');
+        return;
+      }
+      const c1 = cards[0];
+      const c2 = cards[1];
+
+      const cs1 = getComputedStyle(c1);
+      const cs2 = getComputedStyle(c2);
+
+      // 1) Display value
+      recordResult(
+        cs1.display === EXPECT.display,
+        `Card display is "${cs1.display}", expected "${EXPECT.display}".`
+      );
+
+      // 2) Box model fundamentals (margin/padding/border/width)
+      recordResult(px(cs1.marginLeft) === EXPECT.margin,
+        `margin-left is ${px(cs1.marginLeft)}px (expected ${EXPECT.margin}px).`);
+      recordResult(px(cs1.marginRight) === EXPECT.margin,
+        `margin-right is ${px(cs1.marginRight)}px (expected ${EXPECT.margin}px).`);
+      recordResult(px(cs1.paddingLeft) === EXPECT.padding,
+        `padding-left is ${px(cs1.paddingLeft)}px (expected ${EXPECT.padding}px).`);
+      recordResult(px(cs1.paddingRight) === EXPECT.padding,
+        `padding-right is ${px(cs1.paddingRight)}px (expected ${EXPECT.padding}px).`);
+      recordResult(px(cs1.borderLeftWidth) === EXPECT.border,
+        `border-left is ${px(cs1.borderLeftWidth)}px (expected ${EXPECT.border}px).`);
+      recordResult(px(cs1.borderRightWidth) === EXPECT.border,
+        `border-right is ${px(cs1.borderRightWidth)}px (expected ${EXPECT.border}px).`);
+      recordResult(px(cs1.width) === EXPECT.width,
+        `CSS content width is ${px(cs1.width)}px (expected ${EXPECT.width}px).`);
+
+      // 3) Total rendered width check:
+      // offsetWidth = content + padding L/R + border L/R (for content-box)
+      const totalExpected =
+        EXPECT.width + (2 * EXPECT.padding) + (2 * EXPECT.border);
+      const totalActual = c1.offsetWidth;
+      recordResult(
+        Math.abs(totalActual - totalExpected) <= 1,
+        `Rendered width (offsetWidth) is ${totalActual}px (expected ~${totalExpected}px for content-box).`
+      );
+
+      // 4) Verify horizontal gap between c1 and c2 equals marginRight(c1)+marginLeft(c2)
+      // We removed inline-block whitespace via font-size:0 on the container (see style.css).
+      const r1 = c1.getBoundingClientRect();
+      const r2 = c2.getBoundingClientRect();
+      const actualGap = Math.round(r2.left - r1.right);
+      recordResult(
+        actualGap === EXPECT.gapBetweenCards,
+        `Gap between Card 1 & 2 is ${actualGap}px (expected ${EXPECT.gapBetweenCards}px from margins).`
+      );
+
+      // 5) Box-sizing awareness: report current mode & what that implies
+      const boxSizing = cs1.boxSizing; // "content-box" or "border-box"
+      recordResult(true, `box-sizing for cards is "${boxSizing}".`);
+      if (boxSizing === 'border-box') {
+        const expectedBB = EXPECT.width; // width already includes padding/border
+        recordResult(
+          Math.abs(c1.offsetWidth - expectedBB) <= 1,
+          `With border-box, rendered width ≈ CSS width (${c1.offsetWidth}px ≈ ${expectedBB}px).`
+        );
+      } else {
+        recordResult(
+          Math.abs(totalActual - totalExpected) <= 1,
+          `With content-box, rendered width = content + padding + border (${totalActual}px ≈ ${totalExpected}px).`
+        );
+      }
+    }
+
+    // --- Toggle box-sizing so students can re-run and see differences ---
+    document.addEventListener('DOMContentLoaded', () => {
+      $('#runTests').addEventListener('click', runLayoutTests);
+
+      $('#toggleBoxSizing').addEventListener('click', (e) => {
+        const pressed = e.currentTarget.getAttribute('aria-pressed') === 'true';
+        const next = !pressed;
+        e.currentTarget.setAttribute('aria-pressed', String(next));
+        document.documentElement.classList.toggle('border-box-mode', next);
+        runLayoutTests();
+      });
+    });
+  </script>
+</body>
+</html>
