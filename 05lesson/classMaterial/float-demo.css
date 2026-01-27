@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.container {
+  height: 200px;
+  border: 2px solid #aaa;
+
+  /* "vertical centering" hack for same-height, single-line-ish items */
+  line-height: 200px;
+
+  /* crude "space-around" feel */
+  text-align: center;
+
+  /* clearfix hack because children are floated */
+}
+.container::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* float-based "row" layout */
+.container > div {
+  float: left;
+
+  background: lightblue;
+  border: 1px solid #333;
+
+  /* reset line-height so text inside the box isn't 200px tall */
+  line-height: normal;
+
+  /* old-school inline-block centering trick inside the container line box */
+  display: inline-block;
+  vertical-align: middle;
+
+  padding: 20px;
+
+  /* spacing hack to mimic space-around:
+     give each item left/right margins */
+  margin: 0 4%;
+
+  /* optional: keep widths sane so 3 boxes + margins fit */
+  /* width: 15%; */
+}
