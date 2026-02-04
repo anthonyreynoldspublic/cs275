@@ -1,4 +1,4 @@
 Improve the helper text for my form fields to reduce user errors.
-Use one short sentence per field, plai-0n language, no jargon.
+Use one short sentence per field, plain language, no jargon.
 Ensure every <small> is associated via aria-describedby.
 Return only the revised <small> blocks with their matching input ids.
