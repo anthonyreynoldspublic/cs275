@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive List</title>
+  <style>
+    .highlighted {
+      color: red;
+      /* Or use a background-color for a traditional "highlight" effect */
+      /* background-color: yellow; */
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    
+    input {
+      padding: 8px;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+    
+    button {
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <input type="text" id="itemDOMInput" placeholder="Enter new DOM item">
+    <button onclick="addDOMItem()">Add DOM Item</button>
+    <button onclick="addDOMItemComplex()">Add one DOM item the complex way</button>
+  </div>
+  
+  <ul id="list">
+    <li class="todo-item">Existing item</li>
+  </ul>
+
+  <script src="domClick.js"></script>
+</body>
+</html>
