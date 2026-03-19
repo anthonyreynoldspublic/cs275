@@ -1,9 +1,4 @@
-  function makeHTMLSection() {
-    const html = "<section><h2>Section Title</h2><p>This is a section.</p></section>";
-    document.writeln(html);
-    return html;
-  }
-  
+
   
 
 
@@ -74,5 +69,15 @@
     });
   }
 
+
+
+
+  
+function makeHTMLSection() {
+    const html = "<section><h2>Section Title</h2><p>This is a section.</p></section>";
+    document.writeln(html);
+    return html;
+}
+  
 
 makeHTMLSection();
