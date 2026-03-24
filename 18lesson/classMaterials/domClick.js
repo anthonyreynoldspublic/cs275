@@ -1,9 +1,4 @@
-
-  
-
-
-
-  function addDOMItem() {
+   function addDOMItem() {
     const input = document.getElementById('itemDOMInput');
     const itemText = input.value.trim();
     
@@ -59,6 +54,11 @@
     return li;
   }
 
+
+
+
+
+
   // Allow pressing Enter to add item
   const itemInput = document.getElementById('itemDOMInput');
   if (itemInput) {
@@ -72,7 +72,7 @@
 
 
 
-  
+
 function makeHTMLSection() {
     const html = "<section><h2>Section Title</h2><p>This is a section.</p></section>";
     document.writeln(html);
