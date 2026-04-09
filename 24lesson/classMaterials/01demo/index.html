@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Closures: Counter Factory</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="label-tag">closure demo 1 of 3</div>
+    <h1>Counter Factory</h1>
+    <p class="subtitle">Each call to <code>makeCounter()</code> stamps out a fresh scope instance with its own <code>count</code> binding. The two counters below share no state.</p>
+  </header>
+
+  <main>
+
+    <section class="code-block">
+      <div class="code-label">the factory</div>
+      <pre><code><span class="kw">function</span> <span class="fn">makeCounter</span>() {
+  <span class="kw">let</span> count = <span class="num">0</span>;        <span class="cmt">// born in this scope instance</span>
+
+  <span class="kw">return function</span> increment() {
+    count++;           <span class="cmt">// closes over ↑ that specific count</span>
+    <span class="kw">return</span> count;
+  };
+}
+
+<span class="kw">const</span> a = makeCounter();  <span class="cmt">// scope A — count starts at 0</span>
+<span class="kw">const</span> b = makeCounter();  <span class="cmt">// scope B — count starts at 0 (independent)</span></code></pre>
+    </section>
+
+    <section class="counters">
+
+      <div class="counter-card" id="card-a">
+        <div class="card-header">
+          <span class="var-name">a</span>
+          <span class="scope-tag">scope A</span>
+        </div>
+        <div class="binding-row">
+          <span class="binding-key">count</span>
+          <span class="binding-eq">=</span>
+          <span class="binding-val" id="val-a">0</span>
+        </div>
+        <div class="card-actions">
+          <button class="btn-call" onclick="callA()">call a()</button>
+          <button class="btn-reset" onclick="resetA()">reset</button>
+        </div>
+      </div>
+
+      <div class="counter-card" id="card-b">
+        <div class="card-header">
+          <span class="var-name">b</span>
+          <span class="scope-tag">scope B</span>
+        </div>
+        <div class="binding-row">
+          <span class="binding-key">count</span>
+          <span class="binding-eq">=</span>
+          <span class="binding-val" id="val-b">0</span>
+        </div>
+        <div class="card-actions">
+          <button class="btn-call" onclick="callB()">call b()</button>
+          <button class="btn-reset" onclick="resetB()">reset</button>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="log-section">
+      <div class="log-label">return value log</div>
+      <div class="log-box" id="log">
+        <span class="log-placeholder">— call a() or b() to begin —</span>
+      </div>
+    </section>
+
+    <section class="callout">
+      <div class="callout-title">what to notice</div>
+      <ul>
+        <li>Incrementing <code>a</code> never changes <code>b</code>'s count — they own separate heap-promoted scopes.</li>
+        <li><code>makeCounter</code> is a template. Each <em>invocation</em> is a distinct scope instance.</li>
+        <li><code>count</code> is unreachable from outside — no property, no global. Only the returned function can touch it.</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <script src="counter-factory.js"></script>
+</body>
+</html>

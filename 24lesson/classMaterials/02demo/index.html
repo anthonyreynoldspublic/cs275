@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Closures: Shared State</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="label-tag">closure demo 2 of 3</div>
+    <h1>Shared State</h1>
+    <p class="subtitle">
+      Multiple functions can close over the <em>same</em> scope instance and share its bindings.
+      <code>deposit</code>, <code>withdraw</code>, and <code>check</code> are three separate function objects
+      — but they all hold a reference to the same private <code>balance</code> binding.
+      This is the module pattern.
+    </p>
+  </header>
+
+  <main>
+
+    <section class="code-block">
+      <div class="code-label">the factory</div>
+      <pre><code><span class="kw">function</span> <span class="fn">makeWallet</span>(initial) {
+  <span class="kw">let</span> balance = initial;   <span class="cmt">// private — unreachable from outside</span>
+
+  <span class="kw">return</span> {
+    deposit:  (amount) => { balance += amount; <span class="kw">return</span> balance; },
+    withdraw: (amount) => { balance -= amount; <span class="kw">return</span> balance; },
+    check:    ()       => balance
+  };
+}
+
+<span class="kw">const</span> wallet = <span class="fn">makeWallet</span>(<span class="num">100</span>);
+<span class="cmt">// wallet.balance  → undefined  (no direct access)</span>
+<span class="cmt">// wallet.deposit, .withdraw, .check  share the same closed-over scope</span></code></pre>
+    </section>
+
+    <section class="wallet-section">
+
+      <div class="wallet-card">
+        <div class="wallet-header">
+          <span class="wallet-title">wallet</span>
+          <div class="shared-badge">3 functions · 1 shared scope</div>
+        </div>
+
+        <div class="balance-display">
+          <div class="balance-label">balance</div>
+          <div class="balance-value" id="balance">
+            <span class="currency">$</span><span id="balance-num">100</span>
+          </div>
+          <div class="balance-note">closed over by all three functions</div>
+        </div>
+
+        <div class="scope-diagram">
+          <div class="scope-box">
+            <div class="scope-title">closed-over scope</div>
+            <div class="scope-binding">
+              <span class="binding-key">balance</span>
+              <span class="binding-arrow">→</span>
+              <span class="binding-val" id="scope-val">100</span>
+            </div>
+            <div class="fn-tags">
+              <span class="fn-tag">deposit</span>
+              <span class="fn-tag">withdraw</span>
+              <span class="fn-tag">check</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls-card">
+        <div class="control-group">
+          <div class="control-label">deposit</div>
+          <div class="control-row">
+            <span class="dollar">$</span>
+            <input type="number" id="deposit-amt" value="25" min="1">
+            <button class="btn-op btn-deposit" onclick="doDeposit()">wallet.deposit(amt)</button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">withdraw</div>
+          <div class="control-row">
+            <span class="dollar">$</span>
+            <input type="number" id="withdraw-amt" value="40" min="1">
+            <button class="btn-op btn-withdraw" onclick="doWithdraw()">wallet.withdraw(amt)</button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">check</div>
+          <div class="control-row solo">
+            <button class="btn-op btn-check" onclick="doCheck()">wallet.check()</button>
+            <button class="btn-reset" onclick="doReset()">reset</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="log-section">
+      <div class="log-label">return value log</div>
+      <div class="log-box" id="log">
+        <span class="log-placeholder">— call a method to begin —</span>
+      </div>
+    </section>
+
+    <section class="callout">
+      <div class="callout-title">what to notice</div>
+      <ul>
+        <li><code>deposit</code>, <code>withdraw</code>, and <code>check</code> are three function objects that all point into the same scope — mutations by one are immediately visible to the others.</li>
+        <li><code>wallet.balance</code> is <code>undefined</code>. The binding is not a property; it's a lexical variable inside the closed-over scope. No amount of property access can reach it.</li>
+        <li>This is the <strong>module pattern</strong> — private state, public interface — without a class, without <code>this</code>, without <code>Symbol</code>.</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <script src="shared-state.js"></script>
+</body>
+</html>

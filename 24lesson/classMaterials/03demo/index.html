@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Closures: The Loop Trap</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="label-tag">closure demo 3 of 3</div>
+    <h1>The Loop Trap</h1>
+    <p class="subtitle">
+      <code>var</code> does not create a new scope per loop iteration — there is one shared <code>i</code>
+      that all pushed functions close over. By the time any of them runs, the loop has
+      finished and <code>i</code> is already <code>3</code>. <code>let</code> fixes this by
+      creating a fresh binding per iteration.
+    </p>
+  </header>
+
+  <main>
+
+    <section class="code-columns">
+
+      <div class="code-block broken">
+        <div class="code-label broken-label">broken — <code>var</code> (one shared binding)</div>
+        <pre><code><span class="kw">var</span> fns = [];
+
+<span class="kw">for</span> (<span class="kw">var</span> i = <span class="num">0</span>; i &lt; <span class="num">3</span>; i++) {
+  fns.push(() =&gt; i);
+}
+
+<span class="cmt">// loop ends — i is now 3</span>
+<span class="cmt">// all three functions share</span>
+<span class="cmt">// that same i binding</span>
+
+fns[<span class="num">0</span>]();  <span class="cmt">// → 3  (not 0!)</span>
+fns[<span class="num">1</span>]();  <span class="cmt">// → 3</span>
+fns[<span class="num">2</span>]();  <span class="cmt">// → 3</span></code></pre>
+      </div>
+
+      <div class="code-block fixed">
+        <div class="code-label fixed-label">fixed — <code>let</code> (per-iteration scope)</div>
+        <pre><code><span class="kw">let</span> fns = [];
+
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; <span class="num">3</span>; i++) {
+  fns.push(() =&gt; i);
+}
+
+<span class="cmt">// each iteration created its own i</span>
+<span class="cmt">// each function closed over</span>
+<span class="cmt">// a different scope instance</span>
+
+fns[<span class="num">0</span>]();  <span class="cmt">// → 0</span>
+fns[<span class="num">1</span>]();  <span class="cmt">// → 1</span>
+fns[<span class="num">2</span>]();  <span class="cmt">// → 2</span></code></pre>
+      </div>
+
+    </section>
+
+    <section class="scope-diagram-section">
+      <div class="diagram-label">scope diagram — what each function actually closes over</div>
+      <div class="diagram-grid">
+
+        <div class="diagram-col">
+          <div class="diagram-col-title broken-title">var — one scope, shared by all</div>
+          <div class="diagram-scope single-scope">
+            <div class="scope-header">function scope (hoisted)</div>
+            <div class="scope-binding-row">
+              <span class="sk">i</span>
+              <span class="sa">→</span>
+              <span class="sv broken-val" id="var-i-display">3</span>
+              <span class="s-note">(after loop)</span>
+            </div>
+          </div>
+          <div class="fn-arrow-group">
+            <div class="fn-ref broken-ref">fns[0] ──┐</div>
+            <div class="fn-ref broken-ref">fns[1] ──┤ all point here</div>
+            <div class="fn-ref broken-ref">fns[2] ──┘</div>
+          </div>
+        </div>
+
+        <div class="diagram-divider"></div>
+
+        <div class="diagram-col">
+          <div class="diagram-col-title fixed-title">let — three scopes, one per iteration</div>
+          <div class="let-scopes">
+            <div class="diagram-scope let-scope">
+              <div class="scope-header">iteration 0</div>
+              <div class="scope-binding-row">
+                <span class="sk">i</span><span class="sa">→</span><span class="sv fixed-val">0</span>
+              </div>
+              <div class="fn-ref-inline fixed-ref">← fns[0]</div>
+            </div>
+            <div class="diagram-scope let-scope">
+              <div class="scope-header">iteration 1</div>
+              <div class="scope-binding-row">
+                <span class="sk">i</span><span class="sa">→</span><span class="sv fixed-val">1</span>
+              </div>
+              <div class="fn-ref-inline fixed-ref">← fns[1]</div>
+            </div>
+            <div class="diagram-scope let-scope">
+              <div class="scope-header">iteration 2</div>
+              <div class="scope-binding-row">
+                <span class="sk">i</span><span class="sa">→</span><span class="sv fixed-val">2</span>
+              </div>
+              <div class="fn-ref-inline fixed-ref">← fns[2]</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="call-section">
+      <div class="call-columns">
+
+        <div class="call-card broken-card">
+          <div class="call-card-title broken-title">call broken fns (var)</div>
+          <div class="call-buttons">
+            <button class="btn-broken" onclick="callBroken(0)">fns[0]()</button>
+            <button class="btn-broken" onclick="callBroken(1)">fns[1]()</button>
+            <button class="btn-broken" onclick="callBroken(2)">fns[2]()</button>
+          </div>
+          <div class="call-result" id="result-broken">—</div>
+          <div class="result-label">returned</div>
+        </div>
+
+        <div class="call-card fixed-card">
+          <div class="call-card-title fixed-title">call fixed fns (let)</div>
+          <div class="call-buttons">
+            <button class="btn-fixed" onclick="callFixed(0)">fns[0]()</button>
+            <button class="btn-fixed" onclick="callFixed(1)">fns[1]()</button>
+            <button class="btn-fixed" onclick="callFixed(2)">fns[2]()</button>
+          </div>
+          <div class="call-result" id="result-fixed">—</div>
+          <div class="result-label">returned</div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="bonus-section">
+      <div class="bonus-label">bonus — the pre-<code>let</code> IIFE workaround</div>
+      <div class="code-block">
+        <div class="code-label">before ES6, developers forced a new scope per iteration with an IIFE</div>
+        <pre><code><span class="kw">var</span> fns = [];
+
+<span class="kw">for</span> (<span class="kw">var</span> i = <span class="num">0</span>; i &lt; <span class="num">3</span>; i++) {
+  fns.push(
+    (<span class="kw">function</span>(captured) {    <span class="cmt">// IIFE creates a new scope</span>
+      <span class="kw">return function</span>() { <span class="kw">return</span> captured; };
+    })(i)                       <span class="cmt">// i's current value passed as argument</span>
+  );
+}
+
+fns[<span class="num">0</span>]();  <span class="cmt">// → 0   works — captured is a fresh binding each time</span></code></pre>
+      </div>
+      <p class="bonus-note">
+        This pattern is worth showing because it proves the bug was always fixable via closures —
+        <code>let</code> just made the engine do the IIFE bookkeeping for you automatically.
+      </p>
+    </section>
+
+    <section class="callout">
+      <div class="callout-title">what to notice</div>
+      <ul>
+        <li><code>var</code> is function-scoped, not block-scoped. The loop body is not a new scope — <code>i</code> is hoisted to the enclosing function (or global) and mutated in place.</li>
+        <li>All three arrow functions close over the same <code>i</code> binding. When the loop finishes, that binding holds <code>3</code>. Every call returns <code>3</code>.</li>
+        <li><code>let</code> is block-scoped. The spec requires a fresh <code>i</code> binding per iteration. Each pushed function closes over a distinct scope instance — different heap address, different value.</li>
+        <li>The IIFE workaround shows this was always a closures problem solvable with closures. <code>let</code> is syntactic sugar over the same underlying mechanism.</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <script src="loop-trap.js"></script>
+</body>
+</html>
