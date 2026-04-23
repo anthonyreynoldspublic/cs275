@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather Card</title>
+</head>
+
+<body style="margin:0; font-family:Arial, sans-serif; background:#f4f7fb; display:flex; justify-content:center; align-items:center; min-height:100vh;">
+
+  <div id="weather-card" style="background:white; border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,0.12); padding:24px; width:320px; text-align:center;">
+    
+    <div style="font-size:14px; color:#666; margin-bottom:8px;">
+      Current Weather
+    </div>
+
+    <div id="condition" style="font-size:24px; font-weight:bold; margin-bottom:12px;">
+      Loading...
+    </div>
+
+    <div id="temp" style="font-size:48px; font-weight:bold; color:#1d4ed8; margin-bottom:12px;">
+      --°F
+    </div>
+
+    <div id="details" style="font-size:14px; color:#444; line-height:1.6;">
+      <div>Wind: -- mph</div>
+      <div>Day/Night: --</div>
+      <div>Updated: --</div>
+    </div>
+
+  </div>
+
+  <!-- External JS -->
+  <script src="javascript.js"></script>
+
+</body>
+</html>

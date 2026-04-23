@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookie Demo</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 480px;
+      margin: 80px auto;
+      padding: 0 1rem;
+    }
+
+    h1 { margin-bottom: 1.5rem; }
+
+    #welcome { display: none; }
+    #name-form { display: none; }
+
+    label { display: block; margin-bottom: .4rem; font-weight: bold; }
+
+    input[type="text"] {
+      width: 100%;
+      padding: .5rem;
+      font-size: 1rem;
+      box-sizing: border-box;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      padding: .5rem 1.2rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    #clear-btn {
+      margin-top: 1.5rem;
+      background: none;
+      border: 1px solid #999;
+      color: #555;
+      font-size: .875rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Cookie Demo</h1>
+
+  <!-- Shown when the cookie IS set -->
+  <div id="welcome">
+    <p id="welcome-msg"></p>
+    <button id="clear-btn">Forget me (clear cookie)</button>
+  </div>
+
+  <!-- Shown when the cookie is NOT set -->
+  <div id="name-form">
+    <form id="form">
+      <label for="name-input">What is your name?</label>
+      <input type="text" id="name-input" placeholder="Your name" required />
+      <button type="submit">Save my name</button>
+    </form>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

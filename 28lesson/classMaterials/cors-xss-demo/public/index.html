@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VaultLine — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="app-shell">
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">V</div>
+        <span class="brand-name">VaultLine</span>
+      </div>
+      <ul class="nav-links">
+        <li class="nav-item active"><span class="nav-icon">◈</span> Dashboard</li>
+        <li class="nav-item"><span class="nav-icon">⇄</span> Transfers</li>
+        <li class="nav-item"><span class="nav-icon">◎</span> Accounts</li>
+        <li class="nav-item"><span class="nav-icon">◷</span> History</li>
+        <li class="nav-item"><span class="nav-icon">◉</span> Settings</li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <div class="avatar">TR</div>
+          <div class="user-info">
+            <span class="user-name">T. Reynolds</span>
+            <span class="user-role">Primary</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="main-content">
+
+      <header class="top-bar">
+        <div class="page-title">
+          <h1>Good morning, Tony.</h1>
+          <p class="subtitle">Here's your financial snapshot for April 22, 2026.</p>
+        </div>
+        <!-- VULNERABLE SEARCH FORM -->
+        <!-- This form submits to /search which reflects query directly into HTML -->
+        <form class="search-form" action="/search" method="GET">
+          <input
+            class="search-input"
+            type="text"
+            name="q"
+            placeholder="Search transactions..."
+            autocomplete="off"
+          >
+          <button class="search-btn" type="submit">→</button>
+        </form>
+      </header>
+
+      <!-- Balance cards -->
+      <section class="balance-grid">
+        <div class="balance-card primary">
+          <div class="card-label">Total Balance</div>
+          <div class="card-amount">$258,020.67</div>
+          <div class="card-delta positive">↑ 2.4% this month</div>
+        </div>
+        <div class="balance-card">
+          <div class="card-label">Checking</div>
+          <div class="card-amount">$12,480.55</div>
+          <div class="card-delta neutral">acct-001</div>
+        </div>
+        <div class="balance-card">
+          <div class="card-label">Savings</div>
+          <div class="card-amount">$47,200.00</div>
+          <div class="card-delta positive">↑ 4.1% APY</div>
+        </div>
+        <div class="balance-card">
+          <div class="card-label">Portfolio</div>
+          <div class="card-amount">$198,340.12</div>
+          <div class="card-delta positive">↑ 0.8% today</div>
+        </div>
+      </section>
+
+      <!-- Recent transactions -->
+      <section class="transactions-section">
+        <div class="section-header">
+          <h2>Recent Transactions</h2>
+          <button class="btn-ghost" id="fetch-api-btn" onclick="fetchFromAPI()">
+            Load from API ⟳
+          </button>
+        </div>
+
+        <table class="tx-table" id="tx-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Apr 18</td><td>AMZN Marketplace</td><td class="debit">−$84.99</td></tr>
+            <tr><td>Apr 17</td><td>Payroll Direct Deposit</td><td class="credit">+$3,200.00</td></tr>
+            <tr><td>Apr 15</td><td>Whole Foods Market</td><td class="debit">−$67.43</td></tr>
+            <tr><td>Apr 14</td><td>Netflix Subscription</td><td class="debit">−$15.99</td></tr>
+            <tr><td>Apr 12</td><td>Gas Station #447</td><td class="debit">−$58.20</td></tr>
+          </tbody>
+        </table>
+
+        <div id="api-status" class="api-status"></div>
+      </section>
+
+      <!-- DEMO NOTE — visible to instructor, remove in prod -->
+      <div class="demo-notice">
+        ⚠️ DEMO MODE — This page is intentionally vulnerable to XSS.
+        Open the browser console and paste the contents of <code>inject.js</code>.
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // This function makes a cross-origin fetch to the API server.
+    // Whether it succeeds depends on CORS_MODE on api-server.js.
+    async function fetchFromAPI() {
+      const statusEl = document.getElementById('api-status');
+      statusEl.textContent = 'Fetching from http://localhost:3003/api/transactions...';
+      statusEl.className = 'api-status loading';
+
+      try {
+        const res = await fetch('http://localhost:3003/api/transactions');
+        const data = await res.json();
+
+        const tbody = document.querySelector('#tx-table tbody');
+        tbody.innerHTML = '';
+
+        data.transactions.forEach(tx => {
+          const row = document.createElement('tr');
+          const amtClass = tx.amount < 0 ? 'debit' : 'credit';
+          const amtStr = tx.amount < 0
+            ? `−$${Math.abs(tx.amount).toFixed(2)}`
+            : `+$${tx.amount.toFixed(2)}`;
+          row.innerHTML = `
+            <td>${tx.date}</td>
+            <td>${tx.description}</td>
+            <td class="${amtClass}">${amtStr}</td>
+          `;
+          tbody.appendChild(row);
+        });
+
+        statusEl.textContent = '✅ API fetch succeeded — CORS allowed this origin.';
+        statusEl.className = 'api-status success';
+
+      } catch (err) {
+        statusEl.textContent = `🚫 API fetch blocked: ${err.message} — Check CORS_MODE on api-server.js`;
+        statusEl.className = 'api-status error';
+        console.error('Fetch failed:', err);
+      }
+    }
+  </script>
+</body>
+</html>
